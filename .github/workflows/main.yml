@@ -53,3 +53,9 @@ jobs:
         
       - name: docker ps
         run: docker ps
+        
+      - name: docker build
+        run: |
+            cp ./build/libs/*.war ./Dockerfile
+            docker build -t sook22002/m-dev:git-tomcat_v1 ./Dockerfile
+            docker images
