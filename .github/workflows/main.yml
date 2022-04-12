@@ -39,7 +39,7 @@ jobs:
           cache: 'gradle'
      
       - name: chmod gradle
-        run: chmod +X ./gradlew
+        run: chmod +x ./gradlew
       
       - name: build
         run: ./gradlew build --no-daemon
