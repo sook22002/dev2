@@ -41,7 +41,3 @@ jobs:
             chmod -X ./gradlew
             ./gradle build --no-daemon
             
-      - name: check build
-        run: ls ~/build/libs
-    
-
