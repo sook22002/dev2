@@ -11,6 +11,10 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+env:
+    GITHUB_RUN_NUMBER: 1
+
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -54,15 +58,12 @@ jobs:
       - name: docker ps
         run: docker ps
         
-      - name: Release number
-        run: RELEASE_NUM=$env:GITHUB_RUNNER_NUMBER
-
         
       - name: docker build
         run: |
             cp ./build/libs/*.war ./Dockerfile
             docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/m-dev:tomcat_latest ./Dockerfile
-            docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/m-dev:tomcat_$RELEASE_NUM ./Dockerfile
+            docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/m-dev:tomcat_${{env.GITHUB_RUN_NUMBER}} ./Dockerfile
             docker images
             
       - name: Login to Docker Hub
@@ -75,7 +76,7 @@ jobs:
       - name: docker push
         run: |
               docker push ${{ secrets.DOCKERHUB_USERNAME }}/m-dev:tomcat_latest
-              docker push ${{ secrets.DOCKERHUB_USERNAME }}/m-dev:tomcat_$RELEASE_NUM   
+              docker push ${{ secrets.DOCKERHUB_USERNAME }}/m-dev:tomcat_${{env.GITHUB_RUN_NUMBER}}  
               
       - name: Get GKE Credentials
         uses: google-github-actions/get-gke-credentials@v0.7.0
