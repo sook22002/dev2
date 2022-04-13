@@ -55,8 +55,7 @@ jobs:
         run: docker ps
         
       - name: Release number
-        run: |
-            RELEASE_NUM = $env:GITHUB_RUNNER_NUMBER
+        run: RELEASE_NUM=$env:GITHUB_RUNNER_NUMBER
 
         
       - name: docker build
