@@ -80,10 +80,14 @@ jobs:
           
       - name: was-deploy restart
         run: kubectl rollout restart deployment/was
+        
+      - name: change filename
+        run: mv .build/libs/my-spring-board-0.0.1-SNAPSHOT .build/libs/`date +%Y%m%d%H%M%S`.war
 
       - name: Cloud Storage Uploader
         uses: google-github-actions/upload-cloud-storage@v0.9.0
         with:  
           credentials: ${{ secrets.GCP_SA_KEY }}
-          path: ./build/libs/my-spring-board-0.0.1-SNAPSHOT.war
+          path: ./build/libs
           destination: seonghun
+          glob: '*.war'
