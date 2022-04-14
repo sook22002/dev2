@@ -99,7 +99,5 @@ jobs:
           args: '"rollout status deployment/was"'
           run: aws s3 cp ./build/libs/*.war s3:// ${{ secrets.AWS_S3_NAME }}
         
-      - name: change filename
-        run: mv ./build/libs/my-spring-board-0.0.1-SNAPSHOT.war ./build/libs/`date +%Y%m%d%H%M%S`.war
         
 
