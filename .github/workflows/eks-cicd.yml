@@ -97,7 +97,15 @@ jobs:
           aws_region: ${{ secrets.AWS_DEFAULT_REGION }}
         with:
           args: '"rollout status deployment/was"'
-          run: aws s3 cp ./build/libs/*.war s3:// ${{ secrets.AWS_S3_NAME }}
-        
-        
+
+      - name: Copy a folder to s3
+        uses: prewk/s3-cp-action@v2
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          source: './build/libs/*.war'
+          dest: 's3://${{secrets.AWS_S3_NAME }}'
+          flags: --recursive
+
+
 
