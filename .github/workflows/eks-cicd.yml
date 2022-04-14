@@ -23,6 +23,10 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
+      
+      - name: set env
+        run: echo "DATE=$(`date +%Y%m%d%H`) >> $GITHUB_ENV
+        
 
       # Runs a single command using the runners shell
       - name: ls
@@ -76,7 +80,7 @@ jobs:
               docker push ${{ secrets.DOCKERHUB_USERNAME }}/m-dev:tomcat_$GITHUB_RUN_NUMBER
               
       - name: change filename
-        run: mv ./build/libs/my-spring-board-0.0.1-SNAPSHOT.war ./build/libs/`date +%Y%m%d%H%M%S`.war
+        run: mv ./build/libs/my-spring-board-0.0.1-SNAPSHOT.war ./build/libs/${{ env.DATE }}.war
               
       - name: deploy to cluster
         uses: qazz92/kubectl@1.0.3
