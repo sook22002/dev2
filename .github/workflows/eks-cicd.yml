@@ -90,3 +90,6 @@ jobs:
         
       - name: change filename
         run: mv ./build/libs/my-spring-board-0.0.1-SNAPSHOT.war ./build/libs/`date +%Y%m%d%H%M%S`.war
+        
+      - name: Copy file to S3
+        run: aws s3 cp ./build/libs/*.war s3://seonghun
