@@ -82,6 +82,9 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}          
           aws-region: ap-southeast-2
           
+      - name: Connect EKS
+        run: aws eks update-kubeconfig --region ap-southeast-2 --name seonghun
+
       - name: was-deploy restart
         run: kubectl rollout restart deployment/was
         
